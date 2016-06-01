@@ -15,6 +15,6 @@ public class PetController {
     @RequestMapping(value = "/foo", method = RequestMethod.GET)
     public @ResponseBody
     String foo() {
-        return "fooo";
+        return "foo";
     }
 }
