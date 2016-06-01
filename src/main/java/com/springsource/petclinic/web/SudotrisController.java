@@ -15,7 +15,11 @@ public class SudotrisController {
     }
 
     @RequestMapping(value = "/foo/{id}/plusUn", method = RequestMethod.GET)
-    public int plusUn(@PathVariable("id") int id) {
+    public @ResponseBody int plusUn(@PathVariable("id") int id) {
         return id + 1;
+    }
+    @RequestMapping(value = " /id/{id}", method=RequestMethod.GET)
+    public int getOrder(@PathVariable int id){
+        return id;
     }
 }
