@@ -5,6 +5,7 @@ var geometry, material, ombre;
 var grille, grilleCube;
 
 init();
+initCompteur();
 animate();
 
 function init(){
@@ -221,4 +222,26 @@ function countZones(grilleZone){
 		}
 	}
 	return eltPresents.size;
+}
+function initCompteur(){
+	var currentDate = new Date();
+	var chrono = dateDiff(initialDate, currentDate);
+	var chronoHTML = document.getElementById("chrono");
+	chronoHTML.innerHTML = (chrono.heures < 10 ? '0' + chrono.heures : chrono.heures) +":"
+		+ (chrono.minutes < 10 ? '0' + chrono.minutes : chrono.minutes)+":"
+		+ (chrono.secondes < 10 ? '0' + chrono.secondes : chrono.secondes);
+	setInterval(initCompteur, 500);
+}
+
+function dateDiff(date1, date2){
+	var diff = {};
+	var tmp = date2 - date1;
+	tmp = Math.floor(tmp/1000);
+	diff.secondes = tmp % 60;
+	tmp = Math.floor((tmp-diff.secondes)/60);
+	diff.minutes = tmp % 60;
+	tmp = Math.floor((tmp-diff.minutes)/60);
+	diff.heures = tmp % 24;
+
+	return diff;
 }
