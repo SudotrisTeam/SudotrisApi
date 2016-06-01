@@ -3,6 +3,8 @@ var hauteurFacette = 10;
 var tailleMatrice;
 var geometry, material, ombre;
 var grille, grilleCube;
+var initialDate = new Date();
+
 
 init();
 initCompteur();
