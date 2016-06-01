@@ -1,5 +1,6 @@
 package com.springsource.petclinic.web;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -7,9 +8,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/sudotris")
 @Controller
 public class SudotrisController {
-    @RequestMapping(value = "/fooo", method = RequestMethod.GET)
+    @RequestMapping(value = "/foo", method = RequestMethod.GET)
     public @ResponseBody
     String fooo() {
         return "fooo";
+    }
+
+    @RequestMapping(value = "/foo/{id}/plusUn", method = RequestMethod.GET)
+    public int plusUn(@PathVariable("id") int id) {
+        return id + 1;
     }
 }
