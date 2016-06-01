@@ -1,10 +1,9 @@
 var renderer, scene, camera, cube;
 var hauteurFacette = 10;
 var tailleMatrice;
-var geometry, material, ombre;
+var geometry, geometryPlane, material, ombre;
 var grille, grilleCube;
 var initialDate = new Date();
-
 
 init();
 initCompteur();
@@ -12,7 +11,7 @@ animate();
 
 function init(){
     // on initialise le moteur de rendu
-    renderer = new THREE.WebGLRenderer();
+    renderer = new THREE.WebGLRenderer({alpha : true});
 
     // si WebGL ne fonctionne pas sur votre navigateur vous pouvez utiliser le moteur de rendu Canvas à la place
     // renderer = new THREE.CanvasRenderer();
@@ -41,10 +40,10 @@ function init(){
 	material = new Array();
 	var materialValide = new Array();
 	for(var k=0; k<tailleMatrice; k++){
-		var img = new THREE.TextureLoader().load('img/tuile'+(k+1)+'.jpg');
-		material.push(new THREE.MeshBasicMaterial( { map: img } ));
-		img = new THREE.TextureLoader().load('img/tuileValide'+(k+1)+'.jpg');
-		materialValide.push(new THREE.MeshBasicMaterial( { map: img } ));
+		var img = new THREE.TextureLoader().load('img/tuileValide'+(k+1)+'.png');
+		material.push(new THREE.MeshBasicMaterial( { map: img, color: 0xBBBBBB } ));
+		img = new THREE.TextureLoader().load('img/tuileValide'+(k+1)+'.png');
+		materialValide.push(new THREE.MeshBasicMaterial( { map: img, color: 0x33FF33 } ));
 	}
 	random = Math.round(Math.random() * (tailleMatrice -1));
     cube = new THREE.Mesh( geometry, material[random] );
@@ -52,9 +51,10 @@ function init(){
     scene.add( cube );
 	
 	// on crée l'ombre de notre cube de la même manière
-    var materialPlane = new THREE.MeshBasicMaterial( { color: 0x999999, wireframe: false, transparent: true, opacity: 0.8 } );
-    ombre = new THREE.Mesh( geometry, materialPlane );
-	ombre.position.set(0,10,0);
+	geometryPlane = new THREE.CubeGeometry( 20, 20, 190 );
+    var materialPlane = new THREE.MeshBasicMaterial( { color: 0xDDDD55, wireframe: false, transparent: true, opacity: 0.6 } );
+    ombre = new THREE.Mesh( geometryPlane, materialPlane );
+	ombre.position.set(0,95,0);
 	ombre.rotation.set(-3.14/2,0,0);
     scene.add( ombre );
 	
@@ -131,6 +131,8 @@ function animate(){
     // on fait "tomber" le cube le long de l'axe y
 	if (cube.position.y > 10.2) {
 		cube.position.y -= 0.2;
+		ombre.position.y -= 0.1;
+		ombre.scale.z -= 1/950;
 	}
 	else {
 		x = cube.position.x /22 + Math.floor(tailleMatrice /2);
@@ -150,7 +152,8 @@ function animate(){
 		cube = new THREE.Mesh( geometry, material[random] );
 		cube.position.set(0,200,0);
 		scene.add( cube );
-		ombre.position.set(0,10,0);
+		ombre.position.set(0,95,0);
+		ombre.scale.z = 1;
 	}
     // on effectue le rendu de la scène
     renderer.render( scene, camera );
@@ -225,6 +228,7 @@ function countZones(grilleZone){
 	}
 	return eltPresents.size;
 }
+
 function initCompteur(){
 	var currentDate = new Date();
 	var chrono = dateDiff(initialDate, currentDate);
