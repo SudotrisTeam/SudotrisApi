@@ -14,11 +14,27 @@ public class SudotrisController {
         return "fooo";
     }
 
-    @RequestMapping(value = "/foo/{id}/plusUn", method = RequestMethod.GET)
+    @RequestMapping(value = "/fooo/{id}/plusUn", method = RequestMethod.GET)
     public @ResponseBody int plusUn(@PathVariable("id") int id) {
         return id + 1;
     }
-    @RequestMapping(value = " /id/{id}", method=RequestMethod.GET)
+
+    @RequestMapping(value = "/fooo/{id}/plus", method = RequestMethod.GET)
+    public int plus(@PathVariable("id") int id) {
+        return id + 1;
+    }
+
+    @RequestMapping(value = "/foo/{id}/plusUn", method = RequestMethod.GET)
+    public @ResponseBody Integer plusUn(@PathVariable("id") Integer id) {
+        return id + 1;
+    }
+
+    @RequestMapping(value = "/foo/{id}/plus", method = RequestMethod.GET)
+    public Integer plus(@PathVariable("id") Integer id) {
+        return id + 1;
+    }
+
+    @RequestMapping(value = "/id/{id}", method=RequestMethod.GET)
     public int getOrder(@PathVariable int id){
         return id;
     }
