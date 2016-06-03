@@ -10,12 +10,10 @@ setInterval(compteur, 1000);
 animate();
 
 function init(){
-    // on initialise le moteur de rendu
+    // on initialise le moteur de rendu avec gestion de la transparence
     renderer = new THREE.WebGLRenderer({alpha : true});
-
-    // si WebGL ne fonctionne pas sur votre navigateur vous pouvez utiliser le moteur de rendu Canvas à la place
-    // renderer = new THREE.CanvasRenderer();
-    renderer.setSize( window.innerWidth*.85, window.innerHeight*.85 );
+	
+    renderer.setSize( window.innerWidth*.75, window.innerHeight*.75 );
     document.getElementById('container').appendChild(renderer.domElement);
 
     // on initialise la scène
@@ -30,7 +28,7 @@ function init(){
 
     // on initialise la camera que l’on place ensuite sur la scène
     camera = new THREE.PerspectiveCamera(Math.max(1.5*tailleMatrice, 15), window.innerWidth / window.innerHeight, 1, 10000 );
-    camera.position.set(0, 900, 450);
+    camera.position.set(0, 900, 430);
 	camera.rotation.set(-1.1,0,0);
 	
     scene.add(camera);
@@ -151,6 +149,7 @@ function animate(){
 		}
 		random = Math.round(Math.random() * (tailleMatrice -1));
 		cube = new THREE.Mesh( geometry, material[random] );
+		cube.material.color.setHex( 0xBBBBBB );
 		cube.position.set(0,200,0);
 		scene.add( cube );
 		ombre.position.set(0,95,0);
@@ -176,9 +175,9 @@ function moveCube(e){
 	}
 }
 
-function verifierPosition(x, z, value) {
+function verifierPosition(x, z, value, cubePose) {
 	if (value == 1 || value == 2 || value == 3) {
-		cube.material.color.setHex( 0xFF3333 );
+		cube.material.color.setHex( 0xFF3333 ); // On doit faire une nouvelle texture, sinon toutes les textures de meme valeurs se changent en meme temps
 	}
 }
 
@@ -194,6 +193,13 @@ function loadGrid(){
 			[2,0,5,4,0,1,6,0,3]];
 }
 
+function loadGrid4(){
+	return [[0,0,0,2],
+			[0,1,0,0],
+			[3,0,0,1],
+			[0,0,0,0]];
+}
+
 function loadEmptyGrid(){
 	return [[0,0,0,0,0,0,0,0,0],
 			[0,0,0,0,0,0,0,0,0],
@@ -206,10 +212,17 @@ function loadEmptyGrid(){
 			[0,0,0,0,0,0,0,0,0]];
 }
 
+function loadEmptyGrid4(){
+	return [[0,0,0,0],
+			[0,0,0,0],
+			[0,0,0,0],
+			[0,0,0,0]];
+}
+
 function loadCubes() {
 	var grilleTmp = new Array();
 	for (var i=0; i<tailleMatrice; i++) {
-		grilleTmp.push(new Array(9));
+		grilleTmp.push(new Array(tailleMatrice));
 	}
 	return grilleTmp;
 }
@@ -226,6 +239,13 @@ function loadZones(){
 			[7,7,7,8,8,8,9,9,9]];
 }
 
+function loadZones4(){
+	return [[1,1,2,2],
+			[1,1,2,2],
+			[3,3,4,4],
+			[3,3,4,4]];
+}
+
 function countZones(grilleZone){
 	var eltPresents = new Set();
 	for (var i=0; i<grilleZone.length; i++) {
@@ -239,8 +259,8 @@ function countZones(grilleZone){
 function compteur(){
 	chrono ++;
 	var secondes = chrono % 60;
-	var minutes = Math.floor(chrono/60);
-	var heures = Math.floor(chrono/3600);
+	var minutes = ((chrono - secondes) / 60) % 60;
+	var heures = (chrono - secondes - 60*minutes) / 3600;
 	var chronoHTML = document.getElementById("chrono");
 	chronoHTML.innerHTML = (heures < 10 ? '0' + heures : heures) +":"
 		+ (minutes < 10 ? '0' + minutes : minutes)+":"
