@@ -6,7 +6,7 @@ var grille, grilleCube;
 var initialDate = new Date();
 
 init();
-//initCompteur();
+setInterval(initCompteur, 1000);
 animate();
 
 function init(){
@@ -243,7 +243,6 @@ function initCompteur(){
 	chronoHTML.innerHTML = (chrono.heures < 10 ? '0' + chrono.heures : chrono.heures) +":"
 		+ (chrono.minutes < 10 ? '0' + chrono.minutes : chrono.minutes)+":"
 		+ (chrono.secondes < 10 ? '0' + chrono.secondes : chrono.secondes);
-	setInterval(initCompteur, 500);
 }
 
 function dateDiff(date1, date2){
