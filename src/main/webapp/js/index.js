@@ -6,7 +6,7 @@ var grille, grilleCube;
 var initialDate = new Date();
 
 init();
-initCompteur();
+//initCompteur();
 animate();
 
 function init(){
