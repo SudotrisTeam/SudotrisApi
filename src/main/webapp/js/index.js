@@ -147,6 +147,7 @@ function animate(){
 			if (grille[z][x] == 0) {
 				grilleCube[z][x] = cube;
 			}
+			verifierPosition(z, x, random);
 		}
 		random = Math.round(Math.random() * (tailleMatrice -1));
 		cube = new THREE.Mesh( geometry, material[random] );
@@ -172,6 +173,12 @@ function moveCube(e){
 		else if (e.which == 48 && cube.position.y > 12) {
 			cube.position.y -= 1;
 		}
+	}
+}
+
+function verifierPosition(x, z, value) {
+	if (value == 1 || value == 2 || value == 3) {
+		cube.material.color.setHex( 0xFF3333 );
 	}
 }
 
