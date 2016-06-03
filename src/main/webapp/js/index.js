@@ -3,10 +3,10 @@ var hauteurFacette = 10;
 var tailleMatrice;
 var geometry, geometryPlane, material, ombre;
 var grille, grilleCube;
-var initialDate = new Date();
+var chrono = 0;
 
 init();
-setInterval(initCompteur, 1000);
+setInterval(compteur, 1000);
 animate();
 
 function init(){
@@ -236,24 +236,13 @@ function countZones(grilleZone){
 	return eltPresents.size;
 }
 
-function initCompteur(){
-	var currentDate = new Date();
-	var chrono = dateDiff(initialDate, currentDate);
+function compteur(){
+	chrono ++;
+	var secondes = chrono % 60;
+	var minutes = Math.floor(chrono/60);
+	var heures = Math.floor(chrono/3600);
 	var chronoHTML = document.getElementById("chrono");
-	chronoHTML.innerHTML = (chrono.heures < 10 ? '0' + chrono.heures : chrono.heures) +":"
-		+ (chrono.minutes < 10 ? '0' + chrono.minutes : chrono.minutes)+":"
-		+ (chrono.secondes < 10 ? '0' + chrono.secondes : chrono.secondes);
-}
-
-function dateDiff(date1, date2){
-	var diff = {};
-	var tmp = date2 - date1;
-	tmp = Math.floor(tmp/1000);
-	diff.secondes = tmp % 60;
-	tmp = Math.floor((tmp-diff.secondes)/60);
-	diff.minutes = tmp % 60;
-	tmp = Math.floor((tmp-diff.minutes)/60);
-	diff.heures = tmp % 24;
-
-	return diff;
+	chronoHTML.innerHTML = (heures < 10 ? '0' + heures : heures) +":"
+		+ (minutes < 10 ? '0' + minutes : minutes)+":"
+		+ (secondes < 10 ? '0' + secondes : secondes);
 }
