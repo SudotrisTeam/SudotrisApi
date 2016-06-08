@@ -3,8 +3,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/sudotris")
-@RestController
+@Controller
 public class SudotrisController {
+    /*
     @RequestMapping(value = "/foo", method = RequestMethod.GET)
     public @ResponseBody
     String fooo() {
@@ -45,4 +46,5 @@ public class SudotrisController {
     public int reel(@PathVariable("id") int id) {
         return id;
     }
+    */
 }
