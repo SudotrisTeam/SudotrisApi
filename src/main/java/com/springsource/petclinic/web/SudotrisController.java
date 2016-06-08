@@ -40,7 +40,7 @@ public class SudotrisController {
     public String mock(@PathVariable("id") int id) {
         return "foo";
     }
-
+    
     @RequestMapping(value = "/id/{id}/reel", method = RequestMethod.GET)
     public int reel(@PathVariable("id") int id) {
         return id;
